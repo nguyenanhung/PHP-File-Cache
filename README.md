@@ -1,21 +1,23 @@
 # PHP File Cache
 
+[![Latest Stable Version](http://poser.pugx.org/nguyenanhung/php-file-cache/v)](https://packagist.org/packages/nguyenanhung/php-file-cache) [![Total Downloads](http://poser.pugx.org/nguyenanhung/php-file-cache/downloads)](https://packagist.org/packages/nguyenanhung/php-file-cache) [![Latest Unstable Version](http://poser.pugx.org/nguyenanhung/php-file-cache/v/unstable)](https://packagist.org/packages/nguyenanhung/php-file-cache) [![License](http://poser.pugx.org/nguyenanhung/php-file-cache/license)](https://packagist.org/packages/nguyenanhung/php-file-cache) [![composer.lock](http://poser.pugx.org/nguyenanhung/php-file-cache/composerlock)](https://packagist.org/packages/nguyenanhung/php-file-cache)
+
 Light, simple and standalone PHP in-file caching class
 
-This library is fork code from `https://github.com/Wruczek/PHP-File-Cache` as refactoring some one!
+This library is fork code from `https://github.com/Wruczek/PHP-File-Cache` as refactoring someone!
 
 ### Advantages
 
 - Light, standalone and simple
 - All code in one file - no pointless drivers.
-- Secure - every generated cache file have a php header with `die`, making direct access impossible even if someone knows the path and your server is not configured properly
+- Secure - every generated cache file have a php header with `die`, making direct access impossible even if someone knows the path, and your server is not configured properly
 - Well documented and tested
 - Supports PHP 5.4 - 8.0
 - Free under a GPL-3.0 license
 
 ### Requirements and Installation
 
-You need PHP 5.4.0+ for usage and PHP 5.6+ for development (PHPUnit)
+You need PHP 5.4+ for usage
 
 Require with composer:
 
@@ -25,8 +27,8 @@ Require with composer:
 
 ```php
 <?php
+require_once __DIR__ . '/vendor/autoload.php';
 use nguyenanhung\PhpFileCache\PhpFileCache;
-require_once __DIR__ . "/vendor/autoload.php";
 
 $cache = new PhpFileCache();
 
