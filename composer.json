@@ -1,0 +1,28 @@
+{
+    "name": "nguyenanhung/php-file-cache",
+    "description": "Light, simple and standalone PHP in-file caching class",
+    "keywords": [
+        "cache",
+        "file",
+        "php"
+    ],
+    "homepage": "https://github.com/nguyenanhung/PHP-File-Cache",
+    "license": "GPL-3.0",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Nguyen An Hung",
+            "email": "dev@nguyenanhung.com",
+            "homepage": "https://nguyenanhung.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "nguyenanhung\\PhpFileCache\\": "src/"
+        }
+    }
+}
