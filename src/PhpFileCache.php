@@ -64,6 +64,9 @@ class PhpFileCache
      * @param string $cacheFileExtension cache file extension. Must end with .php
      *
      * @throws Exception if there is a problem loading the cache
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
      */
     public function __construct($cacheDir = "cache/", $cacheFileName = "defaultCacheFile", $cacheFileExtension = ".cache.php")
     {
@@ -75,15 +78,19 @@ class PhpFileCache
     }
 
     /**
-     * Loads cache
+     * Load Cache File
      *
-     * @return array array filled with data
+     * @return array|mixed array filled with data
      * @throws Exception if there is a problem loading the cache
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 08/29/2021 33:28
      */
     private function loadCacheFile()
     {
         $filepath = $this->getCacheFilePath();
-        $file     = @file_get_contents($filepath);
+        $file     = file_get_contents($filepath);
 
         if (!$file) {
             unlink($filepath);
@@ -123,17 +130,19 @@ class PhpFileCache
      */
     protected function saveCacheFile()
     {
-        if (!file_exists($this->getCacheDir()))
-            @mkdir($this->getCacheDir());
+        if (!file_exists($this->getCacheDir())) {
+            mkdir($this->getCacheDir());
+        }
 
         $cache             = $this->cacheArray;
         $cache["hash-sum"] = $this->getStringHash(serialize($cache));
         $data              = serialize($cache);
-        $firstLine         = '<?php die("Access denied") ?>' . PHP_EOL;
+        $firstLine         = '<?php die("Access denied"); ?>' . PHP_EOL;
         $success           = file_put_contents($this->getCacheFilePath(), $firstLine . $data) !== FALSE;
 
-        if (!$success)
+        if (!$success) {
             throw new Exception("Cannot save cache");
+        }
 
         return $this;
     }
@@ -156,8 +165,9 @@ class PhpFileCache
             throw new InvalidArgumentException('$key must be a string, got type "' . get_class($key) . '" instead');
         }
 
-        if ($this->isDevMode())
+        if ($this->isDevMode()) {
             $expiration = 1;
+        }
 
         $storeData = [
             "time"      => time(),
@@ -185,8 +195,9 @@ class PhpFileCache
     {
         $this->eraseExpired();
 
-        if (!isset($this->cacheArray[$key]))
+        if (!isset($this->cacheArray[$key])) {
             return NULL;
+        }
 
         $data = $this->cacheArray[$key];
 
@@ -199,17 +210,17 @@ class PhpFileCache
      * This is basically a shortcut, turns this:
      * <code>
      * if($cache->isExpired(key)) {
-     *     $cache->store(key, $newdata, 10);
+     *     $cache->set(key, $newData, 10);
      * }
      *
-     * $data = $cache->retrieve(key);
+     * $data = $cache->get(key);
      * </code>
      *
      * to this:
      *
      * <code>
      * $data = $cache->refreshIfExpired(key, function () {
-     *    return $newdata;
+     *    return $newData;
      * }, 10);
      * </code>
      *
@@ -267,8 +278,9 @@ class PhpFileCache
             }
         }
 
-        if ($counter > 0)
+        if ($counter > 0) {
             $this->saveCacheFile();
+        }
 
         return $counter;
     }
@@ -296,11 +308,13 @@ class PhpFileCache
      */
     public function isExpired($key, $eraseExpired = TRUE)
     {
-        if ($eraseExpired)
+        if ($eraseExpired) {
             $this->eraseExpired();
+        }
 
-        if (!$this->isCached($key, FALSE))
+        if (!$this->isCached($key, FALSE)) {
             return TRUE;
+        }
 
         $item = $this->cacheArray[$key];
 
@@ -319,8 +333,9 @@ class PhpFileCache
      */
     public function isCached($key, $eraseExpired = TRUE)
     {
-        if ($eraseExpired)
+        if ($eraseExpired) {
             $this->eraseExpired();
+        }
 
         return isset($this->cacheArray[$key]);
     }
@@ -345,8 +360,9 @@ class PhpFileCache
      */
     public function debugCache()
     {
-        if (file_exists($this->getCacheFilePath()))
+        if (file_exists($this->getCacheFilePath())) {
             var_dump(unserialize($this->stripFirstLine(file_get_contents($this->getCacheFilePath()))));
+        }
     }
 
     /**
@@ -392,8 +408,9 @@ class PhpFileCache
     {
         $position = strpos($str, "\n");
 
-        if ($position === FALSE)
+        if ($position === FALSE) {
             return $str;
+        }
 
         return substr($str, $position + 1);
     }
@@ -420,8 +437,9 @@ class PhpFileCache
     public function setCacheDir($cacheDir)
     {
         // Add "/" to the end if its not here
-        if (substr($cacheDir, -1) !== "/")
+        if (substr($cacheDir, -1) !== "/") {
             $cacheDir .= "/";
+        }
 
         $this->cacheDir = $cacheDir;
 
@@ -489,8 +507,9 @@ class PhpFileCache
     public function setCacheFileExtension($cacheFileExtension)
     {
         // Add ".php" to the end if its not here
-        if (substr($cacheFileExtension, -4) !== ".php")
+        if (substr($cacheFileExtension, -4) !== ".php") {
             $cacheFileExtension .= ".php";
+        }
 
         $this->cacheFileExtension = $cacheFileExtension;
 
