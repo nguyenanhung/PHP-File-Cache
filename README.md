@@ -1,6 +1,8 @@
-# PHP-File-Cache
+# PHP File Cache
 
 Light, simple and standalone PHP in-file caching class
+
+This library is fork code from `https://github.com/Wruczek/PHP-File-Cache` as refactoring some one!
 
 ### Advantages
 
@@ -8,14 +10,15 @@ Light, simple and standalone PHP in-file caching class
 - All code in one file - no pointless drivers.
 - Secure - every generated cache file have a php header with `die`, making direct access impossible even if someone knows the path and your server is not configured properly
 - Well documented and tested
-- Supports PHP 5.4.0 - 7.1+
-- Free under a MIT license
+- Supports PHP 5.4 - 8.0
+- Free under a GPL-3.0 license
 
 ### Requirements and Installation
 
 You need PHP 5.4.0+ for usage and PHP 5.6+ for development (PHPUnit)
 
-Require with composer:<br>
+Require with composer:
+
 `composer require nguyenanhung/php-file-cache`
 
 ### Usage
@@ -35,3 +38,13 @@ echo "Latest cache save: $data";
 ```
 
 See [examples](https://github.com/nguyenanhung/PHP-File-Cache/tree/master/examples) for more
+
+## Support
+
+If any question & request, please contact following information
+
+| Name        | Email                | Skype            | Facebook      |
+| ----------- | -------------------- | ---------------- | ------------- |
+| Hung Nguyen | dev@nguyenanhung.com | nguyenanhung5891 | @nguyenanhung |
+
+From Vietnam with Love <3
