@@ -4,6 +4,7 @@ namespace nguyenanhung\PhpFileCache;
 
 use Exception;
 use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * Class PhpFileCache - Light, simple and standalone PHP in-file caching class
@@ -73,7 +74,7 @@ class PhpFileCache
         $this->setCacheFilename($cacheFileName);
         $this->setCacheDir($cacheDir);
         $this->setCacheFileExtension($cacheFileExtension);
-        $this->setDevMode(FALSE);
+        $this->setDevMode(false);
         $this->reloadFromDisc();
     }
 
@@ -98,10 +99,11 @@ class PhpFileCache
         }
 
         // Remove the first line which prevents direct access to the file
-        $file = $this->stripFirstLine($file);
-        $data = unserialize($file);
+        $content = $this->stripFirstLine($file);
 
-        if ($data === FALSE) {
+        $data = unserialize($content);
+
+        if ($data === false) {
             unlink($filepath);
             throw new Exception("Cannot unserialize cache file, cache file deleted. ({$this->getCacheFilename()})");
         }
@@ -130,15 +132,15 @@ class PhpFileCache
      */
     protected function saveCacheFile()
     {
-        if (!file_exists($this->getCacheDir())) {
-            mkdir($this->getCacheDir());
+        if (!file_exists($this->getCacheDir()) && !mkdir($concurrentDirectory = $this->getCacheDir()) && !is_dir($concurrentDirectory)) {
+            throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
         }
 
         $cache             = $this->cacheArray;
         $cache["hash-sum"] = $this->getStringHash(serialize($cache));
         $data              = serialize($cache);
         $firstLine         = '<?php die("Access denied"); ?>' . PHP_EOL;
-        $success           = file_put_contents($this->getCacheFilePath(), $firstLine . $data) !== FALSE;
+        $success           = file_put_contents($this->getCacheFilePath(), $firstLine . $data) !== false;
 
         if (!$success) {
             throw new Exception("Cannot save cache");
@@ -159,7 +161,7 @@ class PhpFileCache
      * @return $this
      * @throws Exception if the file cannot be saved
      */
-    public function set($key, $data, $expiration = 60, $permanent = FALSE)
+    public function set($key, $data, $expiration = 60, $permanent = false)
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string, got type "' . get_class($key) . '" instead');
@@ -191,12 +193,12 @@ class PhpFileCache
      * @return mixed|null returns data if $key is valid and not expired, NULL otherwise
      * @throws Exception if the file cannot be saved
      */
-    public function get($key, $meta = FALSE)
+    public function get($key, $meta = false)
     {
         $this->eraseExpired();
 
         if (!isset($this->cacheArray[$key])) {
-            return NULL;
+            return null;
         }
 
         $data = $this->cacheArray[$key];
@@ -232,7 +234,7 @@ class PhpFileCache
      * @return mixed|null Data currently stored under key
      * @throws Exception if the file cannot be saved
      */
-    public function refreshIfExpired($key, $refreshCallback, $cacheTime = 60, $meta = FALSE)
+    public function refreshIfExpired($key, $refreshCallback, $cacheTime = 60, $meta = false)
     {
         if ($this->isExpired($key)) {
             $this->set($key, $refreshCallback(), $cacheTime);
@@ -251,14 +253,14 @@ class PhpFileCache
      */
     public function eraseKey($key)
     {
-        if (!$this->isCached($key, FALSE)) {
-            return FALSE;
+        if (!$this->isCached($key, false)) {
+            return false;
         }
 
         unset($this->cacheArray[$key]);
         $this->saveCacheFile();
 
-        return TRUE;
+        return true;
     }
 
     /**
@@ -272,7 +274,7 @@ class PhpFileCache
         $counter = 0;
 
         foreach ($this->cacheArray as $key => $value) {
-            if (!$value["permanent"] && $this->isExpired($key, FALSE)) {
+            if (!$value["permanent"] && $this->isExpired($key, false)) {
                 $this->eraseKey($key);
                 $counter++;
             }
@@ -306,14 +308,14 @@ class PhpFileCache
      * @return bool
      * @throws Exception if the file cannot be saved
      */
-    public function isExpired($key, $eraseExpired = TRUE)
+    public function isExpired($key, $eraseExpired = true)
     {
         if ($eraseExpired) {
             $this->eraseExpired();
         }
 
-        if (!$this->isCached($key, FALSE)) {
-            return TRUE;
+        if (!$this->isCached($key, false)) {
+            return true;
         }
 
         $item = $this->cacheArray[$key];
@@ -331,7 +333,7 @@ class PhpFileCache
      * @return bool
      * @throws Exception if the file cannot be saved
      */
-    public function isCached($key, $eraseExpired = TRUE)
+    public function isCached($key, $eraseExpired = true)
     {
         if ($eraseExpired) {
             $this->eraseExpired();
@@ -408,7 +410,7 @@ class PhpFileCache
     {
         $position = strpos($str, "\n");
 
-        if ($position === FALSE) {
+        if ($position === false) {
             return $str;
         }
 
