@@ -1,6 +1,11 @@
 # PHP File Cache
 
-[![Latest Stable Version](http://poser.pugx.org/nguyenanhung/php-file-cache/v)](https://packagist.org/packages/nguyenanhung/php-file-cache) [![Total Downloads](http://poser.pugx.org/nguyenanhung/php-file-cache/downloads)](https://packagist.org/packages/nguyenanhung/php-file-cache) [![Latest Unstable Version](http://poser.pugx.org/nguyenanhung/php-file-cache/v/unstable)](https://packagist.org/packages/nguyenanhung/php-file-cache) [![License](http://poser.pugx.org/nguyenanhung/php-file-cache/license)](https://packagist.org/packages/nguyenanhung/php-file-cache) [![composer.lock](http://poser.pugx.org/nguyenanhung/php-file-cache/composerlock)](https://packagist.org/packages/nguyenanhung/php-file-cache) [![PHP Version Require](http://poser.pugx.org/nguyenanhung/php-file-cache/require/php)](https://packagist.org/packages/nguyenanhung/php-file-cache)
+[![Latest Stable Version](https://img.shields.io/packagist/v/nguyenanhung/php-file-cache.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/php-file-cache)
+[![Total Downloads](https://img.shields.io/packagist/dt/nguyenanhung/php-file-cache.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/php-file-cache)
+[![Daily Downloads](https://img.shields.io/packagist/dd/nguyenanhung/php-file-cache.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/php-file-cache)
+[![Monthly Downloads](https://img.shields.io/packagist/dm/nguyenanhung/php-file-cache.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/php-file-cache)
+[![License](https://img.shields.io/packagist/l/nguyenanhung/php-file-cache.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/php-file-cache)
+[![PHP Version Require](https://img.shields.io/packagist/dependency-v/nguyenanhung/php-file-cache/php)](https://packagist.org/packages/nguyenanhung/php-file-cache)
 
 Light, simple and standalone PHP in-file caching class
 
